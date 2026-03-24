@@ -13,7 +13,7 @@ app = FastAPI(title="Early Disease Detection API")
 # Add CORS middleware to allow requests from the React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -123,6 +123,8 @@ def perform_alert_action(alert_id: int, action_data: schemas.AlertAction, db: Se
         alert.status = "triggered"
         contacts = db.query(models.EmergencyContact).filter(models.EmergencyContact.user_id == current_user.id).all()
         print(f"--- EMERGENCY TRIGGERED FOR {current_user.name} ---")
+        if action_data.latitude and action_data.longitude:
+            print(f"Location: https://www.google.com/maps?q={action_data.latitude},{action_data.longitude}")
         for c in contacts:
             print(f"Calling/Texting {c.name} ({c.relation}) at {c.phone_number}...")
     else:

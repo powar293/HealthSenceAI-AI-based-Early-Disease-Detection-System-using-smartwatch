@@ -63,8 +63,13 @@ export const deleteEmergencyContact = async (contactId) => {
   return response.data;
 };
 
-export const performAlertAction = async (alertId, action) => {
-  const response = await api.post(`/alerts/${alertId}/action`, { action });
+export const performAlertAction = async (alertId, action, latitude = null, longitude = null) => {
+  const payload = { action };
+  if (latitude !== null && longitude !== null) {
+    payload.latitude = latitude;
+    payload.longitude = longitude;
+  }
+  const response = await api.post(`/alerts/${alertId}/action`, payload);
   return response.data;
 };
 

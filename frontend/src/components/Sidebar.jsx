@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 export default function Sidebar({ onLogout }) {
   const links = [
     { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+    { to: '/control-panel', icon: Settings, label: 'Control Panel' },
     { to: '/contacts', icon: Users, label: 'Emergency Contacts' }
   ];
 

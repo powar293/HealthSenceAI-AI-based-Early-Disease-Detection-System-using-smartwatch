@@ -62,6 +62,8 @@ class AlertOut(BaseModel):
 
 class AlertAction(BaseModel):
     action: str
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 class Token(BaseModel):
     access_token: str

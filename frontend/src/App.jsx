@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Contacts from './pages/Contacts';
+import ControlPanel from './pages/ControlPanel';
 import Sidebar from './components/Sidebar';
+import AlertMonitor from './components/AlertMonitor';
 
 function ProtectedRoute({ children, isAuthenticated }) {
   if (!isAuthenticated) {
@@ -26,7 +28,9 @@ function App() {
 
   return (
     <Router>
-      <div className="flex bg-slate-50 min-h-screen font-sans text-slate-800">
+      <div className="flex bg-slate-50 min-h-screen font-sans text-slate-800 relative">
+        <AlertMonitor isAuthenticated={isAuthenticated} />
+        
         {isAuthenticated && <Sidebar onLogout={() => {
           localStorage.removeItem('token');
           setIsAuthenticated(false);
@@ -45,6 +49,11 @@ function App() {
             <Route path="/contacts" element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
                 <Contacts />
+              </ProtectedRoute>
+            } />
+            <Route path="/control-panel" element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ControlPanel />
               </ProtectedRoute>
             } />
           </Routes>
